@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+/* here is my font I'm borrowing from google api*/
+:root {
+   --primary-color: #22254b;
+   --secondary-color: #373b69 
+}
+
+* {
+    box-sizing: border-box;
+}
+
