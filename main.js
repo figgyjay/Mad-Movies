@@ -4,6 +4,12 @@ const imagePath = 'https://image.tmdb.org/t/p/w1280'
 
 const searchPath = 'https://api.themoviedb.org/3/search/movie?api_key=8dd1caa1528a360e353c7bc020d83326&query="8dd1caa1528a360e353c7bc020d83326&query="';
 
+const apiUrl = 'api_key=8dd1caa1528a360e353c7bc020d83326'
+
+const mainUrl = 'https://api.themoviedb.org/3'
+
+const APIMAIN = mainUrl + '/discover/movie/?sort_by=popularity.desc&' + apiUrl;
+
 //URL's above are from the API I'm using
 
 const genres = [
@@ -93,14 +99,57 @@ const main = document.getElementById('main');
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 const tagsEl = document.getElementById('tags');
+//I'm pulling these from the elements in my HTML doc
 
+
+
+
+var selectedGenre = [];
+//this variable allows the ID's of the genres to be stored in the array
 function createGenres(){
     tagsEl.innerHTML = '';
-    genres.forEach(genres => {
-        
+    genres.forEach(genre => {
+        const t = document.createElement('div');
+        t.classList.add('tag');
+        t.id=genre.id;
+        t.innerText = genre.name;
+        t.addEventListener('click', () =>{
+            if(selectedGenre.length == 0){
+                selectedGenre.push(genre.id);  
+            } else {
+                if(selectedGenre.includes(genre.id)) {
+                    selectedGenre.forEach((id,idx) => {
+                        if(id === genre.id){
+                            selectedGenre.splice(idx,1);
+                        }
+                    })
+                } else { 
+                    selectedGenre.push(genre.id);  
+
+                }
+            }
+            console.log(selectedGenre);
+            getMovies(APIMAIN + '&with_genres=' + encodeURI(selectedGenre.join(',')));
+            highlightGenre();
+        })
+        tagsEl.append(t);
     })
 
 }
+
+function highlightGenre(){
+    const tags = document.querySelectorAll('tag');
+    tags.forEach( tag =>{
+        tag.classList.remove('highlight')
+    })
+    if (selectedGenre.length !== 0)
+    selectedGenre.forEach( id => {
+        const highlightedTag = document.getElementById(id);
+        highlightedTag.classList.add('highlight');
+    })
+}
+
+//the above was supposed to be a genre selector but I can't figure out what I did wrong. Tags are not responding. I don't really know how to troubleshoot this
 
 getMovies(myApi)
 
