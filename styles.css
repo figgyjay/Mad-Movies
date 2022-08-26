@@ -11,7 +11,7 @@
 
 body{
     background-color: var(--primary-color);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'fantasy', sans-serif;
     margin: 0;
 }
 
@@ -93,6 +93,11 @@ movie-info span {
 }
 
 .movie-info span.red{
+    color: red
+    
+}
+
+ .overview{
     background-color: #fff;
     padding: 2rem;
     position: absolute;
@@ -100,14 +105,33 @@ movie-info span {
     bottom: 0;
     right: 0;
     max-height: 100%;
-    transform: translateY(101%);
     overflow-y: auto;
+    transform: translateY(101%);
     transition: transform 0.3s ease-in;
+    
 }
-
 .movie:hover .overview{
     transform: translateY(0);
+    cursor: pointer;
+
+}
+#tags{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
 }
 
+.tag{
+    color: white;
+    padding: 10px 20px;
+    background-color: black;
+    border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
 
 
