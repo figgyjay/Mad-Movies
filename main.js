@@ -4,11 +4,12 @@ const imagePath = 'https://image.tmdb.org/t/p/w1280'
 
 const searchPath = 'https://api.themoviedb.org/3/search/movie?api_key=8dd1caa1528a360e353c7bc020d83326&query="8dd1caa1528a360e353c7bc020d83326&query="';
 
-const apiUrl = 'api_key=8dd1caa1528a360e353c7bc020d83326'
+//const apiUrl = 'api_key=8dd1caa1528a360e353c7bc020d83326'
 
-const mainUrl = 'https://api.themoviedb.org/3'
+//const mainUrl = 'https://api.themoviedb.org/3'
 
-const APIMAIN = mainUrl + '/discover/movie/?sort_by=popularity.desc&' + apiUrl;
+const APIMAIN = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=8dd1caa1528a360e353c7bc020d83326&with_genres=';
+//mainUrl + '/discover/movie/?sort_by=popularity.desc&' + apiUrl;
 
 //URL's above are from the API I'm using
 
@@ -92,20 +93,15 @@ const genres = [
   ];
 //I copied list of genres from API
 //console.log(genres);
-
-
-
 const main = document.getElementById('main');
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 const tagsEl = document.getElementById('tags');
 //I'm pulling these from the elements in my HTML doc
 
-
-
-
-var selectedGenre = [];
+var selectedGenre = []
 //this variable allows the ID's of the genres to be stored in the array
+createGenres();
 function createGenres(){
     tagsEl.innerHTML = '';
     genres.forEach(genre => {
@@ -119,8 +115,8 @@ function createGenres(){
             } else {
                 if(selectedGenre.includes(genre.id)) {
                     selectedGenre.forEach((id,idx) => {
-                        if(id === genre.id){
-                            selectedGenre.splice(idx,1);
+                        if(id == genre.id){
+                            selectedGenre.splice(idx, 1);
                         }
                     })
                 } else { 
@@ -129,8 +125,8 @@ function createGenres(){
                 }
             }
             console.log(selectedGenre);
-            getMovies(APIMAIN + '&with_genres=' + encodeURI(selectedGenre.join(',')));
-            highlightGenre();
+            getMovies(APIMAIN + encodeURI(selectedGenre.join(',')))
+            highlightGenre()
         })
         tagsEl.append(t);
     })
@@ -138,8 +134,8 @@ function createGenres(){
 }
 
 function highlightGenre(){
-    const tags = document.querySelectorAll('tag');
-    tags.forEach( tag =>{
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
         tag.classList.remove('highlight')
     })
     if (selectedGenre.length !== 0)
@@ -189,7 +185,8 @@ function showMovie(movies){
 
         <div class = "overview">
 
-        <h3>"${overview}"</h3>
+        <h3>${overview}</h3>
+        ${overview}
         
         </div>`
 
@@ -199,6 +196,15 @@ function showMovie(movies){
 }
 
 
+function colorVote(vote){
+    if(vote >=8){
+        return 'green'
+    } else if(vote >= 5){
+        return 'yellow'
+    }else{
+        return 'red'
+    }
+}
 
 
 form.addEventListener( 'submit', (e) => {
